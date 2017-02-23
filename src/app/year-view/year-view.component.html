@@ -1,6 +1,7 @@
 
 
 <h1> {{currentYear}} </h1>
+
 <select id="monthBox">
 <option *ngFor = "let month of months; let i = index" [value]="month"> {{month.name}} </option>	
 
@@ -10,5 +11,6 @@
 
 <app-month-view [currentMonth]="currentMonth"
 				[previousMonth]="previousMonth"
-				[nextMonth]="nextMonth">  </app-month-view>
+				[nextMonth]="nextMonth"
+				>  </app-month-view>
 

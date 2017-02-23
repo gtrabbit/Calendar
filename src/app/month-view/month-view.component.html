@@ -14,18 +14,20 @@
 
 <div class="day-container">
 	<div class="lead-up-days days" 
-		*ngFor = "let day of leadingDays; let i = index"> 
+		*ngFor = "let day of leadingDays; let i = index"
+			(click)="showDay(day)" > 
 			<p>{{day.date}}</p>  
 		</div>
 
 	<div class="days" 
 		*ngFor = "let day of daysOftheMonth; let i = index" 
-		(click)="showDay(i)" > 
+			(click)="showDay(day)" > 
 		<p>{{day.date}}</p> 
 		</div>
 
 	<div class="days outro-days"
-		*ngFor = "let day of outroDays; let i = index">
+		*ngFor = "let day of outroDays; let i = index"
+			(click)="showDay(day)" >
 			<p> {{day.date}} </p>
 		
 	</div>

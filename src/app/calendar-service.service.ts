@@ -1,43 +1,59 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable, OnInit, Output, EventEmitter } from '@angular/core';
 import { Day } from './day';
 import { Month } from './month';
+import { Activity } from './activity';
 
 @Injectable()
-export class CalendarService {
+export class CalendarService implements OnInit {
+
+private weekday: string[] = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
 
 
-private leapOffset: number = 0;
-months: Month[] = [
-	new Month("January", 1, this.currentYear, 31, 0),
-	new Month("February", 2, this.currentYear, 28, 3),
-	new Month("March", 3, this.currentYear, 31, 3+this.leapOffset),
-	new Month("April", 4, this.currentYear, 30, 6+this.leapOffset),
-	new Month("May", 5, this.currentYear, 31, 1+this.leapOffset),
-	new Month("June", 6, this.currentYear, 30, 4+this.leapOffset),
-	new Month("July", 7, this.currentYear, 31, 6+this.leapOffset),
-	new Month("August", 8, this.currentYear, 31, 2+this.leapOffset),
-	new Month("September", 9, this.currentYear, 30, 5+this.leapOffset),
-	new Month("October", 10, this.currentYear, 31, 0+this.leapOffset),
-	new Month("November", 11, this.currentYear, 30, 3+this.leapOffset),
-	new Month("December", 12, this.currentYear, 31, 5+this.leapOffset),
-]
+calendar = {
 
-currentMonth: Month = this.months[1];
-currentYear: number = 2017;
+      "December 25, 2017" : ["Christmas", "all day"],
+      "August 21, 2017" : ["Jen's Birthday"],
+      "Sunday" : ["Go to church", "9:15"],
+      "weekDays" : ["Go to work", "hopefully by 9"]
+
+}
+
+   
+
+
 
   constructor() { }
 
+    
 
+  ngOnInit(){
 
+  }
 
-	getMonths(){
-	return this.months;
-}
+  fetchSchedule(dayName: string, date: string){
 
- 	
+    let thing = "weekDays";
+    let schedule = [];
+   if (this.calendar.hasOwnProperty(date)){
+    let activity = new Activity(this.calendar[date]);
+    schedule.push(activity);
+  }
+   if (this.calendar.hasOwnProperty(dayName)){
+    let weekly = new Activity(this.calendar[dayName]);
+    schedule.push(weekly);
+   }
+    if (this.calendar.hasOwnProperty(thing)){
+      if (this.weekday.includes(dayName)){
+        let weeklyDay = new Activity(this.calendar[thing]);
+        schedule.push(weeklyDay);
+      }
 
-	
+    }
+    
+   
+    return schedule;
 
+  }
 
 
 }

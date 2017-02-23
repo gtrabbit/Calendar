@@ -1,3 +1,11 @@
-<p>
-  {{title}}
-</p>
+<div class="schedule">
+	<ul>
+		<li *ngFor = "let activity of currentDay.schedule; let i = index">
+			{{this.currentDay.schedule[i].name}}
+		</li>
+	</ul>
+</div>
+
+<h3>
+  {{dayName}}, {{title}} 
+</h3>
