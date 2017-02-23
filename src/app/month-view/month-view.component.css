@@ -1,0 +1,49 @@
+.title-holder{
+	cursor: pointer;
+	display: inline-flex;
+}
+
+.days{
+	min-width: 13.3%;
+	float: left;
+	height: 90px;
+	border: solid black 1px;
+	font-size: 50%;
+	margin: 1px;
+	
+}
+
+.day-titles{
+	float: left;
+	margin: 2px;
+}
+
+.day-title-holder{
+	width: 98vw;
+	display: flex;
+	justify-content: space-around;
+	background-color: cornflowerblue;
+
+}
+
+
+
+.day-container{
+	width: 98vw;
+	display: inline-flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+	background-color: silver;
+
+}
+
+.day-view{
+	float: right;
+}
+
+.lead-up-days{
+	background-color: green;
+}
+.outro-days{
+	background-color: red;
+}

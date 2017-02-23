@@ -1,0 +1,33 @@
+<app-day-view class="day-view" [currentMonth]="currentMonth" [currentDay]="currentDay"></app-day-view>
+
+
+<div class="title-holder">
+	<h2 >{{title}}</h2>
+</div>
+
+<div class="day-title-holder">
+	<p class="day-titles" 
+		*ngFor = "let string of daysOfTheWeek; let i = index"> {{daysOfTheWeek[i]}} 
+	</p> 
+
+	</div>
+
+<div class="day-container">
+	<div class="lead-up-days days" 
+		*ngFor = "let day of leadingDays; let i = index"> 
+			<p>{{day.date}}</p>  
+		</div>
+
+	<div class="days" 
+		*ngFor = "let day of daysOftheMonth; let i = index" 
+		(click)="showDay(i)" > 
+		<p>{{day.date}}</p> 
+		</div>
+
+	<div class="days outro-days"
+		*ngFor = "let day of outroDays; let i = index">
+			<p> {{day.date}} </p>
+		
+	</div>
+
+</div>
