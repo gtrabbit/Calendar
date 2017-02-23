@@ -1,3 +1,3 @@
 export class Activity {
-	constructor(public name: string, public time: number){}
+	constructor(public name: string, public time?: any){}
 }

@@ -10,17 +10,17 @@ import { CalendarService } from '../calendar-service.service';
 })
 export class DayViewComponent implements OnChanges {
 
-	@Input() private currentDay: Day;
+	@Input() private currentDay: Day = new Day ("", "", [{name: "cats", time: 24}]);
 	@Input() private currentMonth: Month;
-	@Input() private currentYear: number = this.CS.currentYear;
 	private title: string; 
+  private dayName: string;
 
   constructor(private CS: CalendarService) { }
 
 
-
   ngOnChanges(){
-  	this.title = this.currentDay.date.toString() 
+  	this.title = this.currentDay.date.toString();
+    this.dayName = this.currentDay.dayName;
   }
 
 }

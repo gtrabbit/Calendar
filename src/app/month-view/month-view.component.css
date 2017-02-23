@@ -19,7 +19,7 @@
 }
 
 .day-title-holder{
-	width: 98vw;
+	width: 96vw;
 	display: flex;
 	justify-content: space-around;
 	background-color: cornflowerblue;
@@ -29,7 +29,7 @@
 
 
 .day-container{
-	width: 98vw;
+	width: 96vw;
 	display: inline-flex;
 	justify-content: space-around;
 	flex-wrap: wrap;
@@ -39,6 +39,8 @@
 
 .day-view{
 	float: right;
+	margin-top: -70px;
+	margin-right: 20px;
 }
 
 .lead-up-days{
