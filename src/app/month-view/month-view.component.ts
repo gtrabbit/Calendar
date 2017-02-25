@@ -21,9 +21,9 @@ export class MonthViewComponent implements OnInit, OnChanges{
   private outroDays: Day[] = [];
   private daysOftheMonth: Day[] = [];
   private title: string; 
-  private currentDay: Day = new Day("please", "select a day", [{name: "", time: 24}])
+  private currentDay: Day = new Day("please", "select a day", [{name: ""}])
   private daysOfTheWeek: string[] = [
-    "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
+    "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
   ];
 
 
@@ -68,8 +68,9 @@ export class MonthViewComponent implements OnInit, OnChanges{
 	}
 
   showDay(day){
+
     this.currentDay = day;
-   
+   console.log(this.currentDay.schedule[1]);
   }
 
 

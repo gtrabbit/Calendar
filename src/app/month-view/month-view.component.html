@@ -16,19 +16,40 @@
 	<div class="lead-up-days days" 
 		*ngFor = "let day of leadingDays; let i = index"
 			(click)="showDay(day)" > 
-			<p>{{day.date}}</p>  
+			<p>{{day.date}}</p> 
+			<p *ngFor = "let items of day.schedule; let i = index">
+				{{day.schedule[i].icon}}
+				{{day.schedule[i].time}}
+				{{day.schedule[i].name}}
+				
+			</p> 
+			
 		</div>
 
 	<div class="days" 
 		*ngFor = "let day of daysOftheMonth; let i = index" 
 			(click)="showDay(day)" > 
 		<p>{{day.date}}</p> 
+		<p *ngFor = "let items of day.schedule; let i = index">
+				{{day.schedule[i].icon}}
+				{{day.schedule[i].time}}
+				{{day.schedule[i].name}}
+				
+			</p>
+		
 		</div>
 
 	<div class="days outro-days"
 		*ngFor = "let day of outroDays; let i = index"
 			(click)="showDay(day)" >
-			<p> {{day.date}} </p>
+			<h3> {{day.date}} </h3>
+			<p *ngFor = "let items of day.schedule; let i = index">
+				{{day.schedule[i].icon}}
+				{{day.schedule[i].time}}
+				{{day.schedule[i].name}}
+				
+			</p>
+		
 		
 	</div>
 
