@@ -2,11 +2,11 @@
 
 <h1> {{currentYear}} </h1>
 
-<select id="monthBox">
+<select id="monthBox" (change)="setMonth()">
 <option *ngFor = "let month of months; let i = index" [value]="month"> {{month.name}} </option>	
 
 </select>
-<button (click)="setMonth()"> Go </button>
+
 
 
 <app-month-view [currentMonth]="currentMonth"

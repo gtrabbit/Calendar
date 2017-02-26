@@ -11,17 +11,17 @@ private weekday: string[] = ["Monday", "Tuesday", "Wednesday", "Thursday", "Frid
 
 calendar = {
 
-      "December 25, 2017" : ["Christmas", undefined, undefined],
-      "August 21, 2017" : ["Jen's Birthday", undefined],
-      "Sunday" : ["Go to church", "9:15", "☦"],
-      "weekDays" : ["Go to work", "9:00", "🚲"]
+      "December 25, 2017" : [new Activity("Christmas", "once", undefined, "☦")],
+      "August 21, 2017" : [new Activity("Jen's Birthday", "once", undefined, "😸")],
+      "Sunday" : [new Activity("Go to church", "weekly", "09:15", "☦")],
+      "weekDays" : [new Activity("Go to work", "weekdays", "09:00", "☭")]
 
 }
 
 icons = ["☭", "☏", "😸", "🚙", "🚲", "🗽", "🎣", "🎥", 
 "☦", "☕"]
 
-
+occurrence = ["once", "weekly", "monthly", "daily", "weekdays", "weekends"]
 
 
 
@@ -38,23 +38,39 @@ icons = ["☭", "☏", "😸", "🚙", "🚲", "🗽", "🎣", "🎥",
     let thing = "weekDays";
     let schedule = [];
    if (this.calendar.hasOwnProperty(date)){
-    var activity = new Activity(this.calendar[date][0], this.calendar[date][1], this.calendar[date][2] );
-    schedule.push(activity);
+    let activity = this.calendar[date];
+    activity.forEach(function(a){
+      schedule.push(a);
+    })
+    
   }
    if (this.calendar.hasOwnProperty(dayName)){
-    let weekly = new Activity(this.calendar[dayName][0], this.calendar[dayName][1], this.calendar[dayName][2]);
+    let weekly = this.calendar[dayName];
+    weekly.forEach(function(a){
+      schedule.push(a);
+    })
     schedule.push(weekly);
    }
     if (this.calendar.hasOwnProperty(thing)){
       if (this.weekday.includes(dayName)){
-        let weeklyDay = new Activity(this.calendar[thing][0], this.calendar[thing][1], this.calendar[thing][2]);
-        schedule.push(weeklyDay);
+        let weeklyDay = this.calendar[thing];
+        weeklyDay.forEach(function(a){
+            schedule.push(a);
+        })
+        
        
       }
 
     }
     
-  
+  schedule.sort(function(a, b){
+    if (a.time < b.time){
+      return -1
+    } else if (a.time > b.time){
+     return 1}
+     return 0;
+  })
+
     return schedule;
 
   }

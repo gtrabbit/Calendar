@@ -1,13 +1,79 @@
-<div class="schedule">
+<div class="schedule day-box">
 	
 		<p *ngFor = "let activity of currentDay.schedule; let i = index">
 			{{this.currentDay.schedule[i].time}}
 			{{this.currentDay.schedule[i].name}}
 			{{this.currentDay.schedule[i].icon}}
+			<button *ngIf="this.currentDay.schedule.length" (click)="delete(i)"> - </button>
 		</p>
 	
 </div>
-
 <h3>
   {{dayName}}, {{title}} 
 </h3>
+<div class="newActs day-box">
+<h3> Add events to your schedule</h3>
+<hr>
+<!--
+<div class="newActs day-box">
+<h3> Add events to your schedule</h3>
+<hr>
+<form id="addNew" (ngSubmit)="newActivity()" #actForm="ngForm">
+<label for="occurrence"> How Often? </label>
+	<select [(ngModel)]="model.occurrence" name="occurrence" id="occurrence"  >
+		<option *ngFor="let item of this.CS.occurrence" [value]="item"> {{item}} </option>
+	</select> <br>
+<div [ngSwitch]="model.occurrence">
+	<ng-container *ngSwitchCase="'once'">
+	<label for="when"> When? </label>
+	<input type="date" name="when" id="when">
+	</ng-container>
+</div>
+
+</form>
+</div>
+
+
+-->
+
+
+
+
+
+<form id="addNew" (ngSubmit)="newActivity()" #actForm="ngForm">
+	<label for="name"> What's your plan? </label>
+	<input type="text" id="name" required="true" [(ngModel)]="model.name" name="name">  <br>
+	<label for="occurrence"> How Often? </label>
+	<select [(ngModel)]="model.occurrence" name="occurrence" id="occurrence"  >
+		<option *ngFor="let item of this.CS.occurrence" [value]="item"> {{item}} </option>
+	</select> <br>
+	
+	<div [ngSwitch]="model.occurrence">
+		<p *ngSwitchCase="'daily'"> Big Digger Dogs </p>
+
+		<ng-container *ngSwitchCase="'weekly'">
+		<label for="days"> On What Day?</label>
+			<select id="days">
+				<option *ngFor = "let day of this.daysOfTheWeek" [value]="day" > {{day}} </option>
+			</select> 
+		</ng-container>
+		<p *ngSwitchDefault> Hello?</p>
+	</div>
+
+	<label for="time"> When does it start? (optional) </label>
+	<input type="time" name="time" id="time" [(ngModel)]="model.time"> <br>
+	<label for="icon"> Give it an icon? (optional) </label> <br>
+	<select id="icon" name="icon" [(ngModel)]="model.icon" >
+		<option *ngFor = "let icon of this.CS.icons" [value]="icon"> {{icon}} </option>
+
+	</select>
+	<button type="submit"> Save </button>
+{{model.name}}
+
+</form>
+
+
+ </div>
+
+
+

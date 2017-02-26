@@ -1,8 +1,10 @@
+<div>
 <app-day-view class="day-view" [currentMonth]="currentMonth" [currentDay]="currentDay"></app-day-view>
 
 
 <div class="title-holder">
 	<h2 >{{title}}</h2>
+</div>
 </div>
 
 <div class="day-title-holder">
@@ -17,9 +19,9 @@
 		*ngFor = "let day of leadingDays; let i = index"
 			(click)="showDay(day)" > 
 			<p>{{day.date}}</p> 
-			<p *ngFor = "let items of day.schedule; let i = index">
-				{{day.schedule[i].icon}}
+			<p *ngFor = "let item of day.schedule; let i = index">
 				{{day.schedule[i].time}}
+				{{day.schedule[i].icon}}
 				{{day.schedule[i].name}}
 				
 			</p> 
@@ -31,10 +33,9 @@
 			(click)="showDay(day)" > 
 		<p>{{day.date}}</p> 
 		<p *ngFor = "let items of day.schedule; let i = index">
-				{{day.schedule[i].icon}}
 				{{day.schedule[i].time}}
+				{{day.schedule[i].icon}}
 				{{day.schedule[i].name}}
-				
 			</p>
 		
 		</div>
@@ -44,10 +45,9 @@
 			(click)="showDay(day)" >
 			<h3> {{day.date}} </h3>
 			<p *ngFor = "let items of day.schedule; let i = index">
-				{{day.schedule[i].icon}}
 				{{day.schedule[i].time}}
+				{{day.schedule[i].icon}}
 				{{day.schedule[i].name}}
-				
 			</p>
 		
 		

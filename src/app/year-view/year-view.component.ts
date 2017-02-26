@@ -63,7 +63,7 @@ export class YearViewComponent implements OnInit {
     
      let monthIndex = document.querySelector("select").selectedIndex;
      this.currentMonth = this.months[monthIndex];
-     
+    
      if (monthIndex>0){
        this.previousMonth = this.months[monthIndex-1];
      } else {this.previousMonth = this.months[11]; }
