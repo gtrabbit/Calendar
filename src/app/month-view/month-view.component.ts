@@ -38,13 +38,14 @@ export class MonthViewComponent implements OnInit, OnChanges{
   	}
 
   ngOnChanges(){
- 
+    const padding = "00";
     this.title = this.currentMonth.name;
     this.daysOftheMonth = [];
 //generates this month's days
     for (let d = 0; d<this.currentMonth.days; d++){
-
-      let dateNow = this.currentMonth.name + " " + (d+1) + ", " + this.YV.currentYear;
+      let str = "" + (d+1);
+      let dayNumber = padding.substring(0, padding.length - str.length) + str;
+      let dateNow = this.currentMonth.name + " " + dayNumber + ", " + this.YV.currentYear;
       let dayName = this.daysOfTheWeek[(this.currentMonth.offset+d)%7]
       let today = new Day(dayName, dateNow, this.CS.fetchSchedule(dayName, dateNow))
       this.daysOftheMonth.push(today);
@@ -60,8 +61,10 @@ export class MonthViewComponent implements OnInit, OnChanges{
   this.outroDays = [];
   let remainingDays = (7- (this.currentMonth.days + this.currentMonth.offset)%7)%7;
   for (let i=0; i<remainingDays; i++){
+    let str = "" + (i+1);
+    let dayNumber = padding.substring(0, padding.length - str.length) + str;
     let dayName2 = this.daysOfTheWeek[6-(this.currentMonth.offset + this.currentMonth.days)%7 + i];
-    let dateNext = this.nextMonth.name+ " " + (i+1)+ ", " + this.YV.currentYear;
+    let dateNext = this.nextMonth.name+ " " + dayNumber+ ", " + this.YV.currentYear;
     this.outroDays.push(new Day(dayName2, dateNext, this.CS.fetchSchedule(dayName2, dateNext)))
   }
 

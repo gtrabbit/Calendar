@@ -4,6 +4,7 @@
 			{{this.currentDay.schedule[i].time}}
 			{{this.currentDay.schedule[i].name}}
 			{{this.currentDay.schedule[i].icon}}
+			
 			<button *ngIf="this.currentDay.schedule.length" (click)="delete(i)"> - </button>
 		</p>
 	
@@ -11,69 +12,47 @@
 <h3>
   {{dayName}}, {{title}} 
 </h3>
-<div class="newActs day-box">
-<h3> Add events to your schedule</h3>
-<hr>
-<!--
+
+
+
 <div class="newActs day-box">
 <h3> Add events to your schedule</h3>
 <hr>
 <form id="addNew" (ngSubmit)="newActivity()" #actForm="ngForm">
 <label for="occurrence"> How Often? </label>
-	<select [(ngModel)]="model.occurrence" name="occurrence" id="occurrence"  >
-		<option *ngFor="let item of this.CS.occurrence" [value]="item"> {{item}} </option>
+	<select [(ngModel)]="model.occurrence" name="occurrence" id="occurrence"  required>
+		<option *ngFor="let item of this.CS.occurrence; let i = index" [value]="item" selected="{{this.CS.occurrence[0]}}"> {{item}} </option>
 	</select> <br>
 <div [ngSwitch]="model.occurrence">
 	<ng-container *ngSwitchCase="'once'">
 	<label for="when"> When? </label>
-	<input type="date" name="when" id="when">
+	<input type="date" required name="when" id="when" [(ngModel)]="modelDate">
+	</ng-container>
+	<ng-container *ngSwitchCase="'weekly'">
+	<label for="whichDay"> On which day? </label>
+		<select id="days" required name="when2" [(ngModel)]="modelDate" >
+			<option *ngFor = "let day of this.daysOfTheWeek" > {{day}} </option>
+		</select> 
+	</ng-container>
+	<ng-container *ngSwitchCase="'monthly'">
+		<label for="dateRange"> On what day? </label>
+		<input type="number" required name="number" min="1" max="31" id="dateRange" [(ngModel)] = "modelDate">
 	</ng-container>
 </div>
+	<label for="time"> When does it start? (optional) </label>
+		<input type="time" name="time" id="time" [(ngModel)]="model.time"> <br>
+	<label for="icon"> Give it an icon? (optional) </label> <br>
+		<select id="icon" name="icon" [(ngModel)]="model.icon" >
+			<option *ngFor = "let icon of this.CS.icons" [value]="icon"> {{icon}} </option>
+
+		</select> <br>
+	<label for="name"> What's your plan? </label>
+		<input type="text" id="name" required [(ngModel)]="model.name" name="name">  <br>
+	<button type="submit"> Save </button>
+
 
 </form>
 </div>
 
-
--->
-
-
-
-
-
-<form id="addNew" (ngSubmit)="newActivity()" #actForm="ngForm">
-	<label for="name"> What's your plan? </label>
-	<input type="text" id="name" required="true" [(ngModel)]="model.name" name="name">  <br>
-	<label for="occurrence"> How Often? </label>
-	<select [(ngModel)]="model.occurrence" name="occurrence" id="occurrence"  >
-		<option *ngFor="let item of this.CS.occurrence" [value]="item"> {{item}} </option>
-	</select> <br>
-	
-	<div [ngSwitch]="model.occurrence">
-		<p *ngSwitchCase="'daily'"> Big Digger Dogs </p>
-
-		<ng-container *ngSwitchCase="'weekly'">
-		<label for="days"> On What Day?</label>
-			<select id="days">
-				<option *ngFor = "let day of this.daysOfTheWeek" [value]="day" > {{day}} </option>
-			</select> 
-		</ng-container>
-		<p *ngSwitchDefault> Hello?</p>
-	</div>
-
-	<label for="time"> When does it start? (optional) </label>
-	<input type="time" name="time" id="time" [(ngModel)]="model.time"> <br>
-	<label for="icon"> Give it an icon? (optional) </label> <br>
-	<select id="icon" name="icon" [(ngModel)]="model.icon" >
-		<option *ngFor = "let icon of this.CS.icons" [value]="icon"> {{icon}} </option>
-
-	</select>
-	<button type="submit"> Save </button>
-{{model.name}}
-
-</form>
-
-
- </div>
-
-
+<button (click)="logThing()"> cats </button> {{model.occurrence}}
 
