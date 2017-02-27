@@ -35,8 +35,15 @@
 		</select> 
 	</ng-container>
 	<ng-container *ngSwitchCase="'monthly'">
-		<label for="dateRange"> On what day? </label>
-		<input type="number" required name="number" min="1" max="31" id="dateRange" [(ngModel)] = "modelDate">
+		<label for="repeatedDate"> On what day? </label>
+		<select required name="number" id="repeatedDate" [(ngModel)] = "modelDate" >
+			<option *ngFor = "let number of numberList">
+				{{number}}
+			</option>
+
+		</select>
+
+		
 	</ng-container>
 </div>
 	<label for="time"> When does it start? (optional) </label>
