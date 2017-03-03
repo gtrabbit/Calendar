@@ -1,10 +1,11 @@
 import { Component, OnInit, Input, Output, OnChanges } from '@angular/core';
 import { Day } from '../day';
+import { Activity } from '../activity';
 import { CalendarService } from '../calendar-service.service';
 import { Month } from '../month';
 import { YearViewComponent } from '../year-view/year-view.component';
 import { DayViewComponent } from '../day-view/day-view.component';
-
+import { StylizerService } from '../stylizer.service';
 
 @Component({
   selector: 'app-month-view',
@@ -13,6 +14,8 @@ import { DayViewComponent } from '../day-view/day-view.component';
 })
 export class MonthViewComponent implements OnInit, OnChanges{
 
+
+  @Input() private currentDate: Date;
   @Input() private currentMonth: Month = this.YV.months[5];
   @Input() private previousMonth: Month = this.YV.months[5];
   @Input() private nextMonth: Month = this.YV.months[5];
@@ -20,24 +23,25 @@ export class MonthViewComponent implements OnInit, OnChanges{
   private leadingDays: Day[] = [];
   private outroDays: Day[] = [];
   private daysOftheMonth: Day[] = [];
+  private allDisplayedDays: Day[] = [];
   private title: string; 
-  private currentDay: Day = new Day("please", "select a day", [])
+  private currentDay: Day = new Day("undefined", "undefined", undefined)
+  private ghostOfTheCurrentDay: number; 
   private daysOfTheWeek: string[] = [
     "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
   ];
+  
 
 
 
 
 
-  constructor(private CS: CalendarService, private YV: YearViewComponent) { }
+  constructor(private CS: CalendarService, private YV: YearViewComponent) {
+   const regex: RegExp = /\d+(?=,)/g;
+   }
 
-  ngOnInit() {
-   
- 
-  	}
-
-  ngOnChanges(){
+ makeNewDays(){
+    this.allDisplayedDays = [];
     const padding = "00";
     this.title = this.currentMonth.name;
     this.daysOftheMonth = [];
@@ -49,13 +53,16 @@ export class MonthViewComponent implements OnInit, OnChanges{
       let dayName = this.daysOfTheWeek[(this.currentMonth.offset+d)%7]
       let today = new Day(dayName, dateNow, this.CS.fetchSchedule(dayName, dateNow))
       this.daysOftheMonth.push(today);
+      this.allDisplayedDays.push(today);
     }
 //adds in leading days
     this.leadingDays = [];
     for (let i=this.currentMonth.offset; i > 0; i--){
       let dayName1 = this.daysOfTheWeek[(this.currentMonth.offset - i)];
-      let dateThen = this.previousMonth.name+ " " + (this.previousMonth.days -  i )+ ", " + this.YV.currentYear;
-      this.leadingDays.push(new Day(dayName1, dateThen, this.CS.fetchSchedule(dayName1, dateThen) ))
+      let dateThen = this.previousMonth.name+ " " + (this.previousMonth.days -  (i-1) )+ ", " + this.YV.currentYear;
+      let today = new Day(dayName1, dateThen, this.CS.fetchSchedule(dayName1, dateThen))
+      this.leadingDays.push(today);
+      this.allDisplayedDays.push(today);
     }
 //adds in outro days
   this.outroDays = [];
@@ -63,21 +70,43 @@ export class MonthViewComponent implements OnInit, OnChanges{
   for (let i=0; i<remainingDays; i++){
     let str = "" + (i+1);
     let dayNumber = padding.substring(0, padding.length - str.length) + str;
-    let dayName2 = this.daysOfTheWeek[6-(this.currentMonth.offset + this.currentMonth.days)%7 + i];
+    let dayName2 = this.daysOfTheWeek[6-((this.currentMonth.days - this.currentMonth.offset)%7)  + i];
     let dateNext = this.nextMonth.name+ " " + dayNumber+ ", " + this.YV.currentYear;
-    this.outroDays.push(new Day(dayName2, dateNext, this.CS.fetchSchedule(dayName2, dateNext)))
+    let today = new Day(dayName2, dateNext, this.CS.fetchSchedule(dayName2, dateNext))
+    this.outroDays.push(today);
+    this.allDisplayedDays.push(today);
   }
 
-	}
+//note that these days are created dynamically each time a new month
+// is loaded thus no changes made to these arrays persist
+// --add all events to CS.calendar
+    }
 
-  showDay(day){
-
-    this.currentDay = day;
-    console.log(day);
+  ngOnInit() {
    
+   this.currentDay = this.daysOftheMonth[this.currentDate.getDate()-1];
+    this.ghostOfTheCurrentDay = this.allDisplayedDays.indexOf(this.currentDay);
+  	}
+
+  ngOnChanges(){
+    this.makeNewDays() 
+    
+  }
+//displays current day in the day-view component
+  showDay(day){
+    console.log(day);
+    this.currentDay = day;
+    this.ghostOfTheCurrentDay = this.allDisplayedDays.indexOf(this.currentDay);
+       
   }
 
-
+  OnActAdded(activity: string){
+    this.makeNewDays();
+    this.currentDay = this.allDisplayedDays[this.ghostOfTheCurrentDay];
+    
+    
+    
+  }
 
 
   

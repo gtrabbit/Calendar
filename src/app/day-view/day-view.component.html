@@ -1,24 +1,27 @@
-<div class="schedule day-box">
-	
-		<p *ngFor = "let activity of currentDay.schedule; let i = index">
-			{{this.currentDay.schedule[i].time}}
-			{{this.currentDay.schedule[i].name}}
-			{{this.currentDay.schedule[i].icon}}
-			
-			<button *ngIf="this.currentDay.schedule.length" (click)="delete(i)"> - </button>
-		</p>
-	
-</div>
-<h3>
+<div class="schedule day-box" id="schedule-box">
+<h3 class="dayTitle">
   {{dayName}}, {{title}} 
 </h3>
-
-
-
-<div class="newActs day-box">
-<h3> Add events to your schedule</h3>
 <hr>
-<form id="addNew" (ngSubmit)="newActivity()" #actForm="ngForm">
+	<span *ngIf="this.toggle" (click)="undo()" > This event, and all recurring instances of it, will be permanently deleted. <u>Undo?</u> </span>
+	<p *ngFor = "let activity of currentDay.schedule; let i = index">
+		{{this.currentDay.schedule[i].time}}
+		{{this.currentDay.schedule[i].name}}
+		{{this.currentDay.schedule[i].icon}}
+		
+		<button *ngIf="this.currentDay.schedule.length" (click)="delete(i)"> - </button>
+
+		</p>
+	
+
+
+<div class="newActs">
+<div class="initDisplay">
+<h4> Add events to your schedule?</h4>
+<button (click)="toggleFormDisplay()" id="toggleButton"> + </button> 
+</div>
+
+<form id="addNew" (ngSubmit)="newActivity()" #actForm="ngForm" *ngIf="FormDisplay">
 <label for="occurrence"> How Often? </label>
 	<select [(ngModel)]="model.occurrence" name="occurrence" id="occurrence"  required>
 		<option *ngFor="let item of this.CS.occurrence; let i = index" [value]="item" selected="{{this.CS.occurrence[0]}}"> {{item}} </option>
@@ -51,8 +54,13 @@
 	<label for="icon"> Give it an icon? (optional) </label> <br>
 		<select id="icon" name="icon" [(ngModel)]="model.icon" >
 			<option *ngFor = "let icon of this.CS.icons" [value]="icon"> {{icon}} </option>
+		</select> <br>
+	<label for="category"> Categorize this event? (optional) </label> <br>
+		<select id="category" name="category" [(ngModel)]="model.category" >
+			<option *ngFor = "let category of this.CS.categories" [value]="category"> {{category}} </option>
 
 		</select> <br>
+
 	<label for="name"> What's your plan? </label>
 		<input type="text" id="name" required [(ngModel)]="model.name" name="name">  <br>
 	<button type="submit"> Save </button>
@@ -61,5 +69,13 @@
 </form>
 </div>
 
-<button (click)="logThing()"> cats </button> {{model.occurrence}}
+
+
+
+</div>
+
+
+
+
+
 

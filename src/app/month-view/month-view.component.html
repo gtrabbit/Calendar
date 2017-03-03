@@ -1,24 +1,24 @@
-<div>
-<app-day-view class="day-view" [currentMonth]="currentMonth" [currentDay]="currentDay"></app-day-view>
+
+<app-day-view class="day-view" [currentMonth]="currentMonth" [currentDay]="currentDay" (ActivityAdded)="OnActAdded($event)"></app-day-view>
 
 
-<div class="title-holder">
-	<h2 >{{title}}</h2>
-</div>
-</div>
+
+	
+
+
 
 <div class="day-title-holder">
 	<p class="day-titles" 
 		*ngFor = "let string of daysOfTheWeek; let i = index"> {{daysOfTheWeek[i]}} 
 	</p> 
-
 	</div>
 
 <div class="day-container">
 	<div class="lead-up-days days" 
 		*ngFor = "let day of leadingDays; let i = index"
 			(click)="showDay(day)" > 
-			<p>{{day.date}}</p> 
+			<h3 class="date-number">{{day.date.split(" ")[1].replace(",", "")}}</h3> 
+			<hr>
 			<p *ngFor = "let item of day.schedule; let i = index">
 				{{day.schedule[i].time}}
 				{{day.schedule[i].icon}}
@@ -31,7 +31,8 @@
 	<div class="days" 
 		*ngFor = "let day of daysOftheMonth; let i = index" 
 			(click)="showDay(day)" > 
-		<p>{{day.date}}</p> 
+		<h3 class="date-number">{{day.date.split(" ")[1].replace(",", "")}}</h3> 
+		<hr>
 		<p *ngFor = "let items of day.schedule; let i = index">
 				{{day.schedule[i].time}}
 				{{day.schedule[i].icon}}
@@ -43,7 +44,8 @@
 	<div class="days outro-days"
 		*ngFor = "let day of outroDays; let i = index"
 			(click)="showDay(day)" >
-			<h3> {{day.date}} </h3>
+			<h3 class="date-number"> {{day.date.split(" ")[1].replace(",", "")}} </h3>
+			<hr>
 			<p *ngFor = "let items of day.schedule; let i = index">
 				{{day.schedule[i].time}}
 				{{day.schedule[i].icon}}

@@ -1,0 +1,27 @@
+h1{
+	font-family: 'Diplomata SC', cursive;
+}
+select{
+	position: relative;
+	margin-top: 110px;
+	font-family: 'Diplomata SC', cursive;
+	padding: 1%;
+	appearance: none;
+	font-size: 5vw;
+	float: left;
+	line-height: 100%;
+	cursor: pointer;
+	border: none;
+	background-color: transparent;
+}
+
+select:focus{
+	outline: dotted silver 2px;
+}
+
+option{
+	font-size: 2vw;
+	font-family: 'Raleway', sans-serif;
+	background-color: transparent;
+}
+

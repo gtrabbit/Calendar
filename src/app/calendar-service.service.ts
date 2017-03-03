@@ -11,9 +11,9 @@ private weekEnd: string[] = ["Saturday", "Sunday"];
 
 calendar = {
 
-      "December 25, 2017" : [new Activity("Christmas", "once", undefined, "☦")],
-      "August 21, 2017" : [new Activity("Jen's Birthday", "once", undefined, "😸")],
-      "Sunday" : [new Activity("Go to church", "weekly", "09:15", "☦")],
+      "December 25, 2017" : [new Activity("Christmas", "December 25, 2017", undefined, "☦")],
+      "August 21, 2017" : [new Activity("Jen's Birthday", "August 21, 2017", undefined, "😸")],
+      "Sunday" : [new Activity("Go to church", "Sunday", "09:15", "☦")],
       "weekdays" : [new Activity("Go to work", "weekdays", "09:00", "☭")]
 
 }
@@ -22,7 +22,7 @@ icons = ["☭", "☏", "😸", "🚙", "🚲", "🗽", "🎣", "🎥",
 "☦", "☕"]
 
 occurrence = ["today", "once", "weekly", "monthly", "daily", "weekdays", "weekends"]
-
+categories = ["Holiday", "Work", "Entertainment", "Religious", "Social", "Errands/Appointments", "Medical", "School", "Personal", "Family", "Community"]
 
 
   constructor() { }
@@ -31,34 +31,41 @@ occurrence = ["today", "once", "weekly", "monthly", "daily", "weekdays", "weeken
 
   ngOnInit(){
 
+
   }
+  
 
   fetchSchedule(dayName: string, date: string){
 
     let thing = "weekdays";
     let schedule = [];
     let thegoatbeast = date.match(/\d+(?=,)/g)[0];
-   console.log(thegoatbeast);
+  
+    if (this.calendar.hasOwnProperty("daily")){
+    let daily = this.calendar["daily"];
+    daily.forEach(function(a){
+      schedule.push(a);
+      })
+    }
 
+//fetches monthly events
     if (this.calendar.hasOwnProperty(thegoatbeast)){
-      console.log("it worked!");
       let monthly = this.calendar[thegoatbeast];
       monthly.forEach(function(a){
         schedule.push(a);
-      })
-       
-      
+      })     
     }
 
 
-
+//fetches events linked to individual days
    if (this.calendar.hasOwnProperty(date)){
     let activity = this.calendar[date];
     activity.forEach(function(a){
       schedule.push(a);
     })
-    
   }
+
+//fetches weekly events by day of the week
    if (this.calendar.hasOwnProperty(dayName)){
     let weekly = this.calendar[dayName];
     weekly.forEach(function(a){
@@ -66,6 +73,7 @@ occurrence = ["today", "once", "weekly", "monthly", "daily", "weekdays", "weeken
     })
    }
 
+//fetches events linked to weekends
    if(this.calendar.hasOwnProperty("weekends")){
       if (this.weekEnd.includes(dayName)){
         let weekEnding = this.calendar["weekends"];
@@ -73,21 +81,21 @@ occurrence = ["today", "once", "weekly", "monthly", "daily", "weekdays", "weeken
             schedule.push(a);
         })
      }
-
    }
 
+//fetches events linked to weekdays
     if (this.calendar.hasOwnProperty(thing)){
       if (this.weekday.includes(dayName)){
         let weeklyDay = this.calendar[thing];
         weeklyDay.forEach(function(a){
             schedule.push(a);
         })
-        
-       
       }
-
     }
-    
+
+
+
+//sorts the events chronologically   
   schedule.sort(function(a, b){
     if (a.time < b.time){
       return -1

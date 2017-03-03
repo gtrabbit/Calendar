@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Month } from '../month';
-import { CalendarService } from '../calendar-service.service'
+import { CalendarService } from '../calendar-service.service';
+import { StylizerService} from '../stylizer.service';
 
 @Component({
   selector: 'app-year-view',
@@ -14,9 +15,11 @@ export class YearViewComponent implements OnInit {
   currentYear: number = 2017
   previousMonth: Month;
   nextMonth: Month;
+  currentDate: Date;
  
 
-  constructor(private CS: CalendarService) {
+  constructor(private CS: CalendarService, private Stylizer: StylizerService,) {
+    
 
 
 
@@ -42,10 +45,11 @@ export class YearViewComponent implements OnInit {
   
 
   ngOnInit() {
+   //sets the current day according to, well, the current day
+    this.currentDate = new Date();
    
-
-    
-      this.currentMonth = this.months[1];
+    this.currentMonth = this.months[this.currentDate.getMonth()]
+     
     if (this.currentMonth.index > 0){
       this.previousMonth = this.months[this.currentMonth.index -2];
 
@@ -55,6 +59,9 @@ export class YearViewComponent implements OnInit {
        this.nextMonth = this.months[this.currentMonth.index];
      } else {this.nextMonth = this.months[0];}
      
+    
+
+
 
    }
 
